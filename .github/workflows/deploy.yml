@@ -33,7 +33,7 @@ jobs:
         local-dir: dist/proyecto-angular/browser/
         server-dir: /var/www/html/soldadoj/proyectoangular/
         dangerous-clean-slate: true
-        verbose: true
+        log-level: debug 
 
     - name: Cambiamos los permisos de los archivos a 750
       uses: appleboy/ssh-action@v0.1.5

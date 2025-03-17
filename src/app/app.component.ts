@@ -8,5 +8,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'proyecto-angular';
-  nombre="Javier Soldado";
+  nombre="Javier Soldado Galvín";
 }
