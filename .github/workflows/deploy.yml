@@ -1,0 +1,45 @@
+name: Subir proyecto a RUIX
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkeo del repo
+      uses: actions/checkout@v2
+
+    - name: Montamos Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18.19'
+
+    - name: Instalamos dependencias
+      run: npm install
+
+    - name: Construimos el proyecto
+      run: npm run build -- --base-href=/soldadoj/proyectoangular/
+
+    - name: Metemos el build al RUIX por FTP
+      uses: SamKirkland/FTP-Deploy-Action@4.2.0
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USER }}
+        password: ${{ secrets.FTP_PASS }}
+        local-dir: dist/proyecto-angular/browser/
+        server-dir: /var/www/html/soldadoj/proyectoangular/
+        dangerous-clean-slate: true
+        verbose: true
+
+    - name: Cambiamos los permisos de los archivos a 750
+      uses: appleboy/ssh-action@v0.1.5
+      with:
+        host: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USER }}
+        password: ${{ secrets.FTP_PASS }}
+        script: |
+          find www/Angular/Anime_Angular -type f -exec chmod 755 {} \;
