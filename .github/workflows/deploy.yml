@@ -42,4 +42,4 @@ jobs:
         username: ${{ secrets.FTP_USER }}
         password: ${{ secrets.FTP_PASS }}
         script: |
-          find www/Angular/Anime_Angular -type f -exec chmod 755 {} \;
+          find www/html/soldadoj/proyectoangular -type f -exec chmod 755 {} \;
